@@ -1,6 +1,8 @@
 # Updated Xpad Linux Kernel Driver
 Driver for the Xbox/ Xbox 360/ Xbox 360 Wireless/ Xbox One Controllers
 
+Added dirty support for Namco GunCon3
+
 This driver includes the latest changes in the upstream linux kernel and additionally carries the following staging changes:
 
 * enable debug outputs to ease resolving issues
@@ -8,7 +10,7 @@ This driver includes the latest changes in the upstream linux kernel and additio
 
 # Installing
 ```
-sudo git clone https://github.com/paroj/xpad.git /usr/src/xpad-0.4
+sudo git clone https://github.com/pcnimdock/xpad.git /usr/src/xpad-0.4
 sudo dkms install -m xpad -v 0.4
 ```
 # Updating
