@@ -647,6 +647,7 @@ struct usb_xpad {
 	int pad_nr;			/* the order x360 pads were attached */
 	const char *name;		/* name of the device */
 	struct work_struct work;	/* init/remove device from callback */
+    char guncon3_key_sended;
 };
 
 static int xpad_init_input(struct usb_xpad *xpad);
@@ -1222,12 +1223,18 @@ static bool xpad_prepare_next_out_packet(struct usb_xpad *xpad)
     else {
         //esto solo para guncon3
         //printk(KERN_INFO "Copiando out data \n");
+        if(xpad->guncon3_key_sended==0)
+        {
         xpad->last_out_packet = 0;
         memcpy(xpad->odata, guncon3_init, 8);
         xpad->irq_out->transfer_buffer_length = 8;
         packet->pending = false;
+        xpad->guncon3_key_sended=1;
         return true;
-
+        }
+        else {
+            return false;
+        }
     }
 	return false;
 }
@@ -1739,7 +1746,7 @@ static void xpad_stop_input(struct usb_xpad *xpad)
 static void guncon3_start(struct usb_xpad *xpad)
 {
     unsigned long flags;
-
+    xpad->guncon3_key_sended=0;
     spin_lock_irqsave(&xpad->odata_lock, flags);
 
 
